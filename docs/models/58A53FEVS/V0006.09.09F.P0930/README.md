@@ -5,6 +5,10 @@ EU set, VIDAA U09.09, MediaTek MTK9602, kernel 4.19.79, 32-bit ARM userland.
 Everything below was measured on the device unless explicitly marked
 **UNVERIFIED**. No vendor binaries are included; behavior is described only.
 
+For the vulnerability-style write-up and reversible public PoC, see
+[SECURITY-REPORT.md](SECURITY-REPORT.md) and
+[`tools/u0909f/poc/`](../../../../tools/u0909f/poc/README.md).
+
 ## 1. The root chain (measured end to end)
 
 ```text
@@ -167,5 +171,6 @@ chain: no `pkgmgr` indirection, same outcome.
 
 Per this repository's SECURITY.md, publication is parallel to vendor
 notification. The superwatch group-616 trust boundary (§1) and the per-build
-command map (§2) post-date the 2026-10-29 report and were notified
-separately to `VIDAASecurity@vidaa.com`.
+command map (§2) post-date the 2026-10-29 report. Notification of this
+specific new chain was still pending when this guide was prepared; update the
+status only after the corresponding vendor notice is actually sent.

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; connect-src https://localhost:9888; style-src 'unsafe-inline'; script-src 'unsafe-inline'">
+  <title>U09.09F reversible root probe</title>
+  <style>
+    body { background:#10151d; color:#e6edf3; font:20px/1.45 sans-serif; margin:2rem; }
+    button { font:inherit; margin:.3rem; padding:.6rem 1rem; }
+    pre { background:#080b10; color:#7ee787; padding:1rem; white-space:pre-wrap; overflow-wrap:anywhere; }
+  </style>
+</head>
+<body>
+  <h1>U09.09F reversible root probe</h1>
+  <p>This page calls only the TV-local FaaS endpoint. It does not upload results.</p>
+  <button data-action="status">Status</button>
+  <button data-action="install">Install safe probe</button>
+  <button data-action="cleanup">Remove probe</button>
+  <pre id="output">Ready.</pre>
+  <script>
+    'use strict'
+    const output = document.getElementById('output')
+    async function run(action) {
+      output.textContent = 'Running ' + action + '...'
+      try {
+        const response = await fetch('https://localhost:9888/function/basic/fetch/swprobe', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json', 'identifier': '' },
+          body: JSON.stringify({ action })
+        })
+        output.textContent = await response.text()
+      } catch (error) {
+        output.textContent = String(error && error.stack || error)
+      }
+    }
+    document.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', () => run(button.dataset.action))
+    })
+  </script>
+</body>
+</html>
